@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 # Author: DSN2002
 # Date: 2021-11-12 14:31
-# LastEditTime: 2021-11-12 14:33
+# LastEditTime: 2021-11-12 14:38
 # LastEditors: DSN2002
 # Description:
 # 仅供研究使用，请勿用于其他活动
 #
 from subprocess import getstatusoutput
 
-g = getstatusoutput('pip list --outdated -i https://pypi.mirrors.ustc.edu.cn/simple')
+
+g = getstatusoutput('pip list --outdated -i https://mirrors.aliyun.com/pypi/simple/')    # 更改为阿里云的源
 
 if g[0] != 0:
     print('获取更新列表失败，请重新运行！')
@@ -23,14 +24,16 @@ else:
         print('过期的库有：\n', g[1])
         past_list = []
         g_list = g[1].split('\n')
+        #print(g_list)
         for i in g_list[2:]:
             past_list.append(i.split(' ')[0])
+        # print(past_list)
 
         fail_list = []
         for i in past_list:
             try:
                 print(f'开始更新库：{i}……')
-                update = getstatusoutput(f'pip install --upgrade {i} -i https://pypi.mirrors.ustc.edu.cn/simple')
+                update = getstatusoutput(f'pip install --upgrade {i} -i https://mirrors.aliyun.com/pypi/simple/')
                 if update[0] == 0:
                     print(f'{i}:已更新完成。')
                 else:
